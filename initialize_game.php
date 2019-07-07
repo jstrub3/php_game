@@ -53,21 +53,6 @@
 			die('Error creating table "items": ' . $conn->error . '<br>');
 		}
 		
-		//create inventory table
-		$sql = 'CREATE TABLE `inventory` (
-		 `id` int(11) NOT NULL AUTO_INCREMENT,
-		 `item_id` int(11) NOT NULL,
-		 `count` int(11) NOT NULL,	 
-		 PRIMARY KEY (`id`),
-		 UNIQUE KEY `id` (`id`),
-		 UNIQUE (`item_id`)
-		)';
-
-		if ($conn->query($sql) === FALSE) 
-		{
-			die('Error creating table "inventory": ' . $conn->error . '<br>');
-		}
-		
 		//create enemies table
 		$sql = 'CREATE TABLE `enemies` (
 		 `id` int(11) NOT NULL AUTO_INCREMENT,
