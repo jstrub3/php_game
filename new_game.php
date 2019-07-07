@@ -44,7 +44,44 @@
 			echo 'Database already created<br>';
 		}
 		
+		mysqli_select_db($conn, $dbname);
+		/**********************************************************
+		*Create tables
+		**********************************************************/
 		
+		//create items table
+		$sql = 'CREATE TABLE `items` (
+		 `id` int(11) NOT NULL,
+		 `name` varchar(32) NOT NULL,
+		 `type` int(11) NOT NULL,
+		 PRIMARY KEY (`id`),
+		 UNIQUE KEY `id` (`id`)
+		)';
+
+		if ($conn->query($sql) === TRUE) {
+			echo 'Table "items" created successfully<br>';
+		} else 
+		{
+			die('Error creating table "items": ' . $conn->error . '<br>');
+		}
+		
+		//create inventory table
+		$sql = 'CREATE TABLE `inventory` (
+		 `id` int(11) NOT NULL,
+		 `item_id` int(11) NOT NULL,
+		 `count` int(11) NOT NULL,	 
+		 PRIMARY KEY (`id`),
+		 UNIQUE KEY `id` (`id`)
+		)';
+
+		if ($conn->query($sql) === TRUE) {
+			echo 'Table "inventory" created successfully<br>';
+		} else 
+		{
+			die('Error creating table "inventory": ' . $conn->error . '<br>');
+		}
+		
+		//create enemies table
 		$sql = 'CREATE TABLE `enemies` (
 		 `id` int(11) NOT NULL,
 		 `name` varchar(32) NOT NULL,
@@ -54,16 +91,38 @@
 		 UNIQUE KEY `id` (`id`)
 		)';
 
-		mysqli_select_db($conn, $dbname);
-		
 		if ($conn->query($sql) === TRUE) {
-			echo 'Table enemies created successfully<br>';
+			echo 'Table "enemies" created successfully<br>';
 		} else 
 		{
-			die('Error creating table: ' . $conn->error . '<br>');
+			die('Error creating table "enemies": ' . $conn->error . '<br>');
+		}
+		
+		//create map cells table
+		$sql = 'CREATE TABLE `cells` (
+		 `id` int(11) NOT NULL,
+		 `x_pos` int(11) NOT NULL,
+		 `y_pos` int(11) NOT NULL,
+		 `enemy_id` int(11) NOT NULL,
+		 `item_id` int(11) NOT NULL,
+		 PRIMARY KEY (`id`),
+		 UNIQUE KEY `id` (`id`)
+		)';
+
+		if ($conn->query($sql) === TRUE) {
+			echo 'Table "cells" created successfully<br>';
+		} else 
+		{
+			die('Error creating table "cells": ' . $conn->error . '<br>');
 		}
 
-		//
+		//create some temporary enemies
+		
+		//create some temporary items
+		
+		//create character inventory
+		
+		//create some cells
 		
 		
 		
