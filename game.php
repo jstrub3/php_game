@@ -43,39 +43,61 @@
 		include_once 'map_view.php';
 
 		
-		
-		//query the sql cells stored and construct an html table
-		$conn = new mysqli($_SESSION['server_name'], $_SESSION['username'], $_SESSION['password']);
-		if ($conn->connect_error) 
+		//Check win condition
+		if ( $_SESSION['current_cell_y'] == $_SESSION['exit_cell_y'] && 
+			$_SESSION['current_cell_x'] == $_SESSION['exit_cell_x'])
 		{
-			die('Connection failed: ' . $conn->connect_error . '<br>');
-		} 
+			echo 'Exit reached, you win!';
+		}
 		else
-		{
+		{	
+			//check items and enemies on this cell
+	
+			//query the sql cells stored and construct an html table
+			$conn = new mysqli($_SESSION['server_name'], $_SESSION['username'], $_SESSION['password']);
+			if ($conn->connect_error) 
+			{
+				die('Connection failed: ' . $conn->connect_error . '<br>');
+			} 
+			else
+			{
+				mysqli_select_db($conn, $_SESSION['dbname']);
+			}
+			
 			mysqli_select_db($conn, $_SESSION['dbname']);
-		}
-		
-		mysqli_select_db($conn, $_SESSION['dbname']);
-		$sql = "SELECT enemy_id, enemy_id, item_id FROM cells WHERE x_pos='" . $_SESSION['current_cell_x'] . "' AND y_pos='" . $_SESSION['current_cell_y'] . "'";
-		$result = $conn->query($sql);
-		
-		
-		if ($result->num_rows === 0) 
-		{
-			die('Query for current cell failed: ' . $conn->connect_error . '<br>');
-		}
-		
-		$current_cell = $result->fetch_assoc();
-		
-		
-		if ($current_cell['enemy_id'] == 0)
-		{
-			show_navigation();
-		}
-		else
-		{
-			//if this cell has an enemy
-			show_combat();
+			$sql = "SELECT enemy_id, enemy_id, item_id FROM cells WHERE x_pos='" . $_SESSION['current_cell_x'] . "' AND y_pos='" . $_SESSION['current_cell_y'] . "'";
+			$result = $conn->query($sql);
+			
+			if ($result->num_rows === 0) 
+			{
+				die('Query for current cell failed: ' . $conn->connect_error . '<br>');
+			}
+			
+			$current_cell = $result->fetch_assoc();
+
+			//Check for items
+			if ($current_cell['item_id'] != 0)
+			{
+				echo 'Found item: ' . $current_cell['item_id'] . '<br>';
+				
+				//Add item to character inventory
+				$sql = "INSERT INTO inventory(item_id, count) VALUES('" . $current_cell['item_id'] . "', '1') ON DUPLICATE KEY UPDATE count=count+1";
+				$result = $conn->query($sql);
+			
+				
+				//Remove item from the cell row
+			}
+			
+			//Check for enemies
+			if ($current_cell['enemy_id'] == 0)
+			{
+				show_navigation();
+			}
+			else
+			{
+				//if this cell has an enemy
+				show_combat();
+			}
 		}
 	}
 

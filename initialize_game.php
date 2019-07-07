@@ -59,7 +59,8 @@
 		 `item_id` int(11) NOT NULL,
 		 `count` int(11) NOT NULL,	 
 		 PRIMARY KEY (`id`),
-		 UNIQUE KEY `id` (`id`)
+		 UNIQUE KEY `id` (`id`),
+		 UNIQUE (`item_id`)
 		)';
 
 		if ($conn->query($sql) === FALSE) 
@@ -118,9 +119,9 @@
 		
 		//create some cells
 		$sql = "INSERT INTO cells (x_pos, y_pos, enemy_id, item_id)
-		VALUES ('0', '0', '0', '0'), ('0', '1', '0', '0'), ('0', '2', '0', '0'), " . 
+		VALUES ('0', '0', '0', '0'), ('0', '1', '0', '3'), ('0', '2', '1', '1'), " . 
 				"('1', '0', '0', '0'), ('1', '1', '0', '0'), ('1', '2', '0', '0'), " . 
-				"('2', '0', '0', '0'), ('2', '1', '0', '0'), ('2', '2', '0', '0');";
+				"('2', '0', '0', '0'), ('2', '1', '2', '0'), ('2', '2', '0', '0');";
 		
 		if ($conn->query($sql) === FALSE) 
 		{
@@ -138,10 +139,6 @@
 		
 		$_SESSION['current_cell_x'] = 0;
 		$_SESSION['current_cell_y'] = 0;
-		
-		$_SESSION['current_player_health'] = 5;
-		$_SESSION['current_player_attack'] = 2;
-		$_SESSION['current_player_item'] = 'none';
 		
 		unset($_SESSION['current_enemy_health']);
 	}

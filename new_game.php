@@ -2,7 +2,13 @@
 
 <?php
 	include_once 'initialize_game.php';
-		
+
+	//Set our player stats
+	$_SESSION['current_player_health'] = $_GET['health'];
+	$_SESSION['current_player_attack'] = $_GET['attack'];
+	$_SESSION['current_player_defense'] = $_GET['defense'];
+	$_SESSION['current_player_item'] = 'none';
+	
 	//game states:
 	/*idle - player selects movement to available cells
 	**combat - player selects to use items, attack, or retreat.
