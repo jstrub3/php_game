@@ -15,7 +15,7 @@
 		echo '<p><a href="./game.php?action=move_left">move left</a></p>';
 	}
 	
-	if ( $_SESSION['current_cell_x'] < 3)
+	if ( $_SESSION['current_cell_x'] < 2)
 	{
 		// can move right
 		echo '<p><a href="./game.php?action=move_right">move right</a></p>';
@@ -27,7 +27,7 @@
 		echo '<p><a href="./game.php?action=move_up">move up</a></p>';
 	}
 	
-	if ( $_SESSION['current_cell_y'] < 3)
+	if ( $_SESSION['current_cell_y'] < 2)
 	{
 		// can move down
 		echo '<p><a href="./game.php?action=move_down">move down</a></p>';

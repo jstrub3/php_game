@@ -13,11 +13,13 @@
 	if ( isset($_GET['action']) )
 	{
 		$action = $_GET['action'];
+		$nav_action = FALSE;
 		
 		//handle the actions
 		switch ($action)
 		{
 			case 'move_left':
+			$nav_action = TRUE;
 			$_SESSION['current_cell_x'] = $_SESSION['current_cell_x'] - 1;
 			break;
 			
@@ -40,7 +42,33 @@
 		include_once 'character_view.php';
 		include_once 'map_view.php';
 
-		if (($_SESSION['current_cell_y'] + $_SESSION['current_cell_x']) % 2 == 0)
+		
+		
+		//query the sql cells stored and construct an html table
+		$conn = new mysqli($_SESSION['server_name'], $_SESSION['username'], $_SESSION['password']);
+		if ($conn->connect_error) 
+		{
+			die('Connection failed: ' . $conn->connect_error . '<br>');
+		} 
+		else
+		{
+			mysqli_select_db($conn, $_SESSION['dbname']);
+		}
+		
+		mysqli_select_db($conn, $_SESSION['dbname']);
+		$sql = "SELECT enemy_id, enemy_id, item_id FROM cells WHERE x_pos='" . $_SESSION['current_cell_x'] . "' AND y_pos='" . $_SESSION['current_cell_y'] . "'";
+		$result = $conn->query($sql);
+		
+		
+		if ($result->num_rows === 0) 
+		{
+			die('Query for current cell failed: ' . $conn->connect_error . '<br>');
+		}
+		
+		$current_cell = $result->fetch_assoc();
+		
+		
+		if ($current_cell['enemy_id'] == 0)
 		{
 			show_navigation();
 		}
