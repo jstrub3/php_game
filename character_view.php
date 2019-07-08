@@ -10,9 +10,6 @@
 	echo sprintf('<li>Attack:  %d</li>', $_SESSION['current_player_attack']);
 	echo sprintf('<li>Defense: %d</li>', $_SESSION['current_player_defense']);
 	
-	$_SESSION['current_player_items'] = [];
-	array_push($_SESSION['current_player_items'], 'SWORD', 'POTION', 'SHIELD');
-	
 	if ( isset($_SESSION['current_player_items']) )
 	{
 		for ($i = 0; $i < count($_SESSION['current_player_items']); $i++) 

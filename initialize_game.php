@@ -43,7 +43,6 @@
 		$sql = 'CREATE TABLE `items` (
 		 `id` int(11) NOT NULL AUTO_INCREMENT,
 		 `name` varchar(32) NOT NULL,
-		 `type` varchar(32) NOT NULL,
 		 PRIMARY KEY (`id`),
 		 UNIQUE KEY `id` (`id`)
 		)';
@@ -86,7 +85,7 @@
 
 		//create some temporary enemies
 		$sql = "INSERT INTO enemies (name, attack, health)
-		VALUES ('goblin', '1', '2'), ('ork', '2', '3'), ('sorceror', '3', '2');";
+		VALUES ('goblin', '3', '8'), ('ork', '5', '12'), ('sorceror', '8', '8');";
 	
 		if ($conn->query($sql) === FALSE) 
 		{
@@ -94,8 +93,8 @@
 		}
 		
 		//create some temporary items
-		$sql = "INSERT INTO items (name, type)
-		VALUES ('potion', 'HEAL'), ('sword', 'ATTACK_BOOST'), ('shield', 'DEFENSE_BOOST');";
+		$sql = "INSERT INTO items (name)
+		VALUES ('potion'), ('sword'), ('shield');";
 		
 		if ($conn->query($sql) === FALSE) 
 		{

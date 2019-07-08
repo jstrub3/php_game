@@ -48,7 +48,8 @@
 				}
 				else
 				{
-					echo sprintf('<td style="min-width:50px" align="center"> %s </td>', $rowArr[$x][$y]["enemy_id"] . ', ' . $rowArr[$x][$y]["item_id"]);
+					echo sprintf('<td style="min-width:50px" align="center">  </td>', $rowArr[$x][$y]["enemy_id"] . ', ' . $rowArr[$x][$y]["item_id"]);
+					//echo sprintf('<td style="min-width:50px" align="center"> %s </td>', $rowArr[$x][$y]["enemy_id"] . ', ' . $rowArr[$x][$y]["item_id"]);
 				}
 			}
 			echo '</tr>';

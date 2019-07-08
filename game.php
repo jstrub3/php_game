@@ -39,15 +39,12 @@
 			break;
 		}
 		
-		include_once 'character_view.php';
-		include_once 'map_view.php';
-
-		
 		//Check win condition
 		if ( $_SESSION['current_cell_y'] == $_SESSION['exit_cell_y'] && 
 			$_SESSION['current_cell_x'] == $_SESSION['exit_cell_x'])
 		{
 			echo 'Exit reached, you win!';
+			echo '<p><a href="./homepage.php">play again?</a></p>';
 		}
 		else
 		{	
@@ -78,14 +75,24 @@
 			//Check for items
 			if ($current_cell['item_id'] != 0)
 			{
-				echo 'Found item: ' . $current_cell['item_id'] . '<br>';
-				
-				//Add item to character inventory
-				$sql = "INSERT INTO inventory(item_id, count) VALUES('" . $current_cell['item_id'] . "', '1') ON DUPLICATE KEY UPDATE count=count+1";
+				//Get the item info from the item dba_close
+				$sql = "SELECT name FROM items WHERE id='" . $current_cell['item_id'] . "'";
 				$result = $conn->query($sql);
-			
 				
+				if ($result->num_rows === 0) 
+				{
+					die('Query for item failed: ' . $conn->connect_error . '<br>');
+				}
+							
+				//Add item to character inventory
+				$item = $result->fetch_assoc()['name'];
+				array_push($_SESSION['current_player_items'], $item);
+	
 				//Remove item from the cell row
+				$sql = "UPDATE cells SET item_id='0' WHERE x_pos='" . $_SESSION['current_cell_x'] . "' AND y_pos='" . $_SESSION['current_cell_y'] . "'";
+				$result = $conn->query($sql);
+				
+				echo 'Found item: ' . $item . '<br>';
 			}
 			
 			//Check for enemies
@@ -98,6 +105,16 @@
 				//if this cell has an enemy
 				show_combat();
 			}
+			
+			if ( $_SESSION['current_player_health'] <= 0)
+			{
+				echo '<p><a href="./homepage.php">play again?</a></p>';
+			}
+			else
+			{
+				include_once 'character_view.php';
+				include_once 'map_view.php';
+			}
 		}
 	}
 
@@ -107,14 +124,6 @@
 
 	function show_combat() {
 		include_once 'combat.php';
-	}
-	
-	function show_win() {
-	   //include_once 'game_win.php';
-	}
-	
-	function show_lose() {
-	   //include_once 'game_lose.php';
 	}
 ?>
 
