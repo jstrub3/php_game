@@ -1,6 +1,6 @@
 <html>
 <body>
-<h1 style="color: #5e9ca0;">Server Side Programming Test</h1>
+<h1 style="color: #5e9ca0;">PHP Game</h1>
 
 <?php
 	//the state will be determined based on the action

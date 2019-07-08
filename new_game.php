@@ -1,4 +1,4 @@
-<h2>New Game</h2>
+<h2>PHP Game</h2>
 
 <?php
 	include_once 'initialize_game.php';
