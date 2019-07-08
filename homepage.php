@@ -1,6 +1,6 @@
 <html>
 <body>
-<h1 style="color: #5e9ca0;">Server Side Programming Test</h1>
+<h1 style="color: #5e9ca0;">PHP Game</h1>
 <h2 style="color: #2e6c80;">Game Objective:</h2>
 <p>The player will move around the map one cell at a time.&nbsp; Each cell will contain one of the following:</p>
 <ul>
